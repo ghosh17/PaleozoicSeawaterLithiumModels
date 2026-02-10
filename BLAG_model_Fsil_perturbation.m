@@ -22,7 +22,7 @@ fprintf('    Phase 2: Forcing 424–300 Ma (Li-prescribed F_sil)\n\n');
 %% =====================================================================
 %  SECTION 1: LOAD GEOCARB FORCING (fA, fSR)
 %  =====================================================================
-geocarb_file = fullfile('..', 'BLAG_Phanerozoic', 'GEOCARB_input_arrays_tMod.csv');
+geocarb_file = fullfile(fileparts(mfilename('fullpath')), 'data', 'GEOCARB_input_arrays_tMod.csv');
 if ~isfile(geocarb_file)
     error('BLAG:FileNotFound', 'GEOCARB input file not found: %s', geocarb_file);
 end
@@ -48,7 +48,7 @@ fprintf('Loaded %d GEOCARB forcing time points.\n', numel(mt));
 %% =====================================================================
 %  SECTION 2: LOAD Li BOX MODEL OUTPUT (WI DATA)
 %  =====================================================================
-Li_file = fullfile('..', '..', 'Li_model_output_Ghosh2026.xlsx');
+Li_file = fullfile(fileparts(mfilename('fullpath')), 'data', 'Li_model_output_Ghosh2026.csv');
 if ~isfile(Li_file)
     error('BLAG:FileNotFound', 'Li model output file not found: %s', Li_file);
 end
