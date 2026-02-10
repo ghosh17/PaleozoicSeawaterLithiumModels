@@ -23,7 +23,10 @@ The silicate weathering forcing term is derived from δ⁷Li data converted to w
 | `BLAG_model_Fsil_perturbation.m` | Main driver script — run this file |
 | `BLAG_odes_Fsil.m` | ODE system function (Eqs. 59A–59H) |
 | `data/GEOCARB_input_arrays_tMod.csv` | GEOCARB forcing data (land area fA, spreading rate fSR) |
-| `data/Li_model_output_Ghosh2026.csv` | Li box model output (weathering intensity and pCO₂ estimates) |
+| `data/Li_model_output_Ghosh2026.xlsx` | Li box model output (weathering intensity and pCO₂ estimates) |
+| `data/Li_model_output.xlsx` | Li model output (alternative format) |
+| `data/Li_input_file.xlsx` | Li input data |
+| `data/Li_model_workspace_Ghosh2026.mat` | MATLAB workspace from Li box model |
 | `BLAG_Fsil_perturbation_results.csv` | Example output results (424–300 Ma) |
 
 ## How to Run
@@ -50,7 +53,7 @@ The script will:
 ### GEOCARB Forcing (`data/GEOCARB_input_arrays_tMod.csv`)
 Contains land area factor (fA) and seafloor spreading rate factor (fSR) as functions of geological age, based on GEOCARB III (Berner & Kothavala, 2001).
 
-### Li Model Output (`data/Li_model_output_Ghosh2026.csv`)
+### Li Model Output (`data/Li_model_output_Ghosh2026.xlsx`)
 Contains weathering intensity (WI_high) and pCO₂ estimates derived from the Li box model (Ghosh, 2026). The WI values are normalized to the 424 Ma baseline to produce the cumulative weathering multiplier used in Phase 2.
 
 ## References

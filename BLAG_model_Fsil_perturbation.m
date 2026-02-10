@@ -48,7 +48,7 @@ fprintf('Loaded %d GEOCARB forcing time points.\n', numel(mt));
 %% =====================================================================
 %  SECTION 2: LOAD Li BOX MODEL OUTPUT (WI DATA)
 %  =====================================================================
-Li_file = fullfile(fileparts(mfilename('fullpath')), 'data', 'Li_model_output_Ghosh2026.csv');
+Li_file = fullfile(fileparts(mfilename('fullpath')), 'data', 'Li_model_output_Ghosh2026.xlsx');
 if ~isfile(Li_file)
     error('BLAG:FileNotFound', 'Li model output file not found: %s', Li_file);
 end
