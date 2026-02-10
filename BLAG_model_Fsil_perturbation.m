@@ -253,8 +253,8 @@ F_sil_prescribed_0 = F_sil_baseline * p2.interp_WI_cumul(0);
 F_sil_jump = abs(F_sil_prescribed_0 - F_sil_baseline) / F_sil_baseline;
 if F_sil_jump > 0.01
     warning('BLAG:Discontinuity', ...
-        'F_sil jump of %.1f%% at Phase 1→2 transition (%.4f → %.4f)', ...
-        F_sil_jump*100, F_sil_baseline, F_sil_prescribed_0);
+        'F_sil discontinuity of %.1f%% at 424 Ma: spinup=%.4f, prescribed=%.4f (WI(0)=%.4f)', ...
+        F_sil_jump*100, F_sil_baseline, F_sil_prescribed_0, p2.interp_WI_cumul(0));
 end
 
 % Verify near-steady-state at start of Phase 2
