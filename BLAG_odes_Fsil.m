@@ -28,6 +28,10 @@ function [dydt, flux_out] = BLAG_odes_Fsil(t, y, p)
     M_HCO3 = max(y(7), 1e-10);
     A_CO2  = max(y(8), 1e-10);
 
+    if ~isfield(p, 'mode') || ~ismember(p.mode, {'feedback', 'prescribed'})
+        error('BLAG:InvalidMode', 'p.mode must be ''feedback'' or ''prescribed''.');
+    end
+
     %% ================================================================
     %  SPREADING RATE AND LAND AREA
     %  ================================================================
@@ -66,6 +70,10 @@ function [dydt, flux_out] = BLAG_odes_Fsil(t, y, p)
 
     if strcmp(p.mode, 'prescribed')
         % Prescribed from Li isotope data
+        if ~isfield(p, 'F_sil_baseline') || ~isfield(p, 'interp_WI_cumul')
+            error('BLAG:MissingParam', ...
+                'Prescribed mode requires p.F_sil_baseline and p.interp_WI_cumul.');
+        end
         WI_mult     = max(p.interp_WI_cumul(t), 1e-6);
         F_sil_total = p.F_sil_baseline * WI_mult;
         Fw_CaSi     = F_sil_total * p.frac_CaSi;
