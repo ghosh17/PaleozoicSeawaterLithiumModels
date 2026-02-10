@@ -22,7 +22,7 @@ fprintf('    Phase 2: Forcing 424–300 Ma (Li-prescribed F_sil)\n\n');
 %% =====================================================================
 %  SECTION 1: LOAD GEOCARB FORCING (fA, fSR)
 %  =====================================================================
-geocarb_file = fullfile('..', 'BLAG_Phanerozoic', 'GEOCARB_input_arrays_tMod.csv');
+geocarb_file = fullfile('Data', 'GEOCARB_input_arrays_tMod.csv');
 T_geocarb    = readtable(geocarb_file);
 
 ages_raw = T_geocarb.age;
@@ -45,7 +45,7 @@ fprintf('Loaded %d GEOCARB forcing time points.\n', numel(mt));
 %% =====================================================================
 %  SECTION 2: LOAD Li BOX MODEL OUTPUT (WI DATA)
 %  =====================================================================
-Li_file = fullfile('..', '..', 'Li_model_output_Ghosh2026.xlsx');
+Li_file = fullfile('Data', 'Li_model_output_Ghosh2026.xlsx');
 T_Li    = readtable(Li_file);
 fprintf('Loaded Li model output: %d samples.\n', height(T_Li));
 
