@@ -23,6 +23,9 @@ fprintf('    Phase 2: Forcing 424–300 Ma (Li-prescribed F_sil)\n\n');
 %  SECTION 1: LOAD GEOCARB FORCING (fA, fSR)
 %  =====================================================================
 geocarb_file = fullfile('..', 'BLAG_Phanerozoic', 'GEOCARB_input_arrays_tMod.csv');
+if ~isfile(geocarb_file)
+    error('BLAG:FileNotFound', 'GEOCARB input file not found: %s', geocarb_file);
+end
 T_geocarb    = readtable(geocarb_file);
 
 ages_raw = T_geocarb.age;
@@ -46,6 +49,9 @@ fprintf('Loaded %d GEOCARB forcing time points.\n', numel(mt));
 %  SECTION 2: LOAD Li BOX MODEL OUTPUT (WI DATA)
 %  =====================================================================
 Li_file = fullfile('..', '..', 'Li_model_output_Ghosh2026.xlsx');
+if ~isfile(Li_file)
+    error('BLAG:FileNotFound', 'Li model output file not found: %s', Li_file);
+end
 T_Li    = readtable(Li_file);
 fprintf('Loaded Li model output: %d samples.\n', height(T_Li));
 
@@ -64,6 +70,9 @@ Li_ages    = Li_ages_unique;
 Li_WI_high = Li_WI_unique;
 
 WI_start = Li_WI_high(1);
+if WI_start == 0
+    error('BLAG:InvalidData', 'WI_high baseline at %.0f Ma is zero; cannot normalize.', Li_ages(1));
+end
 WI_cumul = Li_WI_high / WI_start;
 
 fprintf('Valid WI_high samples: %d\n', length(Li_ages));
@@ -238,6 +247,15 @@ fprintf('  At t2=%.0f (%.0f Ma): fA=%.3f, fSR=%.3f\n', ...
 
 % Initial conditions = spinup end-state
 y0_phase2 = y_424;
+
+% Check F_sil continuity at Phase 1→2 transition
+F_sil_prescribed_0 = F_sil_baseline * p2.interp_WI_cumul(0);
+F_sil_jump = abs(F_sil_prescribed_0 - F_sil_baseline) / F_sil_baseline;
+if F_sil_jump > 0.01
+    warning('BLAG:Discontinuity', ...
+        'F_sil jump of %.1f%% at Phase 1→2 transition (%.4f → %.4f)', ...
+        F_sil_jump*100, F_sil_baseline, F_sil_prescribed_0);
+end
 
 % Verify near-steady-state at start of Phase 2
 [dydt_check2, ~] = BLAG_odes_Fsil(0, y0_phase2, p2);
